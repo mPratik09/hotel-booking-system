@@ -28,29 +28,29 @@ public class UserResponseDTO
 				+ ", contactNum=" + contactNum + "]";
 	}
 
-//	public Integer getId()
-//	{
-//		return id;
-//	}
-//
-//	public String getFirstName()
-//	{
-//		return firstName;
-//	}
-//
-//	public String getLastName()
-//	{
-//		return lastName;
-//	}
-//
-//	public String getEmail()
-//	{
-//		return email;
-//	}
-//
-//	public String getContactNum()
-//	{
-//		return contactNum;
-//	}
+	public Integer getId()
+	{
+		return id;
+	}
+
+	public String getFirstName()
+	{
+		return firstName;
+	}
+
+	public String getLastName()
+	{
+		return lastName;
+	}
+
+	public String getEmail()
+	{
+		return email;
+	}
+
+	public String getContactNum()
+	{
+		return contactNum;
+	}
 
 }
