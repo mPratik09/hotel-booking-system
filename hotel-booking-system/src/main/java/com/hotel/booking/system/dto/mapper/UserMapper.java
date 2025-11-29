@@ -11,30 +11,27 @@ public class UserMapper
 
 	public static User userMapper(UserRequestDTO userReqDto)
 	{
+
+		if (!checkPassword(userReqDto.getPassword(), userReqDto.getReEnterPassword()))
+		{
+			throw new IllegalArgumentException("Passwords did not match");
+		}
+
 		User user = new User();
 
 		user.setFirstName(userReqDto.getFirstName());
 		user.setLastName(userReqDto.getLastName());
 		user.setEmail(userReqDto.getEmail());
-//		user.setPassword(userReqDto.getPassword());
-
-//		By using:
-//		Spring’s wrapper around BCrypt
-//		BCrypt + Spring integration + extra features
-		if (checkPassword(userReqDto.getPassword(), userReqDto.getReEnterPassword()))
-		{
-			user.setPassword(
-					PasswordEncoderFactories.createDelegatingPasswordEncoder().encode(userReqDto.getPassword()));
-		} else
-		{
-			throw new IllegalArgumentException("Passwords did not match");
-		}
+		user.setContactNum(userReqDto.getContactNum());
 
 //		By using: 
 //		BCrypt (jBCrypt library)	-	low-level hashing 
 //		user.setPassword(BCrypt.hashpw(userReqDto.getPassword(), BCrypt.gensalt()));
 
-		user.setContactNum(userReqDto.getContactNum());
+//		By using:
+//		Spring’s wrapper around BCrypt
+//		BCrypt + Spring integration + extra features
+		user.setPassword(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode(userReqDto.getPassword()));
 
 		return user;
 	}
