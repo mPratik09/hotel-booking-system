@@ -1,0 +1,57 @@
+
+DROP DATABASE IF EXISTS hotel_booking_db;
+
+create database hotel_booking_db;
+use hotel_booking_db;
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100),
+    email VARCHAR(150) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    contact_no VARCHAR(15) NOT NULL,
+    enabled BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE roles (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    role ENUM('ADMIN', 'USER') NOT NULL UNIQUE
+);
+
+CREATE TABLE user_roles (
+    user_id INT NOT NULL,
+    role_id INT NOT NULL,
+    PRIMARY KEY (user_id, role_id),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE
+);
+
+CREATE TABLE rooms (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    type VARCHAR(50),                -- e.g., Single, Double, Suite
+    capacity INT,
+    active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE reservations (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    room_id INT NOT NULL,
+    user_id INT NOT NULL,
+    status ENUM('PENDING','CONFIRMED','CANCELLED') NOT NULL DEFAULT 'PENDING',
+    price DECIMAL(10,2) NOT NULL,
+    start_time TIMESTAMP NOT NULL,
+    end_time TIMESTAMP NOT NULL,
+    -- created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    -- updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (room_id) REFERENCES rooms(id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+    CREATE TABLE test (
+    id INT AUTO_INCREMENT PRIMARY KEY   
+);
