@@ -24,12 +24,21 @@ public class UserMapper
 		user.setEmail(userReqDto.getEmail());
 		user.setContactNum(userReqDto.getContactNum());
 
+//		By using: 
+//		BCrypt (jBCrypt library)	-	low-level hashing 
+//		user.setPassword(BCrypt.hashpw(userReqDto.getPassword(), BCrypt.gensalt()));
+
 //		By using:
 //		Spring’s wrapper around BCrypt
 //		BCrypt + Spring integration + extra features
 		user.setPassword(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode(userReqDto.getPassword()));
 
 		return user;
+	}
+
+	private static boolean checkPassword(String password, String reEnterPassword)
+	{
+		return password.equals(reEnterPassword);
 	}
 
 	public static UserResponseDTO userDtoMapper(User user)
